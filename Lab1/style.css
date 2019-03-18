@@ -1,0 +1,14 @@
+﻿* { font-family: Tahoma }
+body { margin: 5em 10em 5em 10em;background-image: url(http://metro2033.pl/wp-content/uploads/2018/05/Metro2033_04-150x150.jpg); background-repeat: repeat-y; }
+p { text-align: justify }
+{ list-style-type: square }
+#cena{ color: red; font-weight: bold;}
+.wstęp{font-style: italic;}
+td>img { border-style: solid; border-color: blue;}
+td>img:hover { border-style: solid; border-color: red;}
+h1+h2 {letter-spacing: 5px;}
+td[colspan="2"]>p {font-size: small;}
+p+p {color: grey;}
+h1 {color:blue}
+h1 {color:green}
+#wyd{text-decoration: underline;}
