@@ -180,4 +180,5 @@ function cnt(form, msg, maxSize) {
         msg.innerHTML = maxSize - form.value.length;
 }
 
-alterRows(1, document.getElementsByTagName('tr'));
+// Funkcja musi być zainicjowana jakimś zdarzeniem
+alterRows(1, document.getElementsByTagName('tr')[0]); 
