@@ -8,38 +8,30 @@ const $ = require('cheerio');
 
 // jest \n w tekście
 // Working for belowe link
-const url = 'https://www.specshop.pl/product-pol-18109-ASG-Replika-karabinka-CZ-805-BREN-A1-Desert-Proline-18200.html';
+// const url = 'https://gunfire.com/pl/products/replika-karabinka-rra-sa-e14-edge-tm-half-tan-1152221329.html';
 
-const infoScraper = function(url){
+const infoScraper = function (url) {
     return rp(url)
-    .then(function (htmlString) {
-        var text = $('div[id="component_projector_longdescription"]', htmlString).text();
-        console.log(text);
-        var textSplit = text.split("\n");
-        console.log(textSplit);
-        let fps = "";
-        let model = "";
-        if (null != textSplit) {
-            textSplit.forEach(function (item) {
-                if (item.startsWith("Model:")) {
-                    model = item;
-                }
-                if (item.includes("fps")) {
-                    // console.log(item);
-                    fps = item ;
-                }
-            });
-        }
-        return{
-            model,
-            fps,
-            price: $('.projector_price_value', htmlString).text(),
-        };
-    })
-    .catch(function (err) {
-        //handle error
-        console.log(err);
-    });
+        .then(function (htmlString) {
+            var model= $('td[class="n54117_item_b1"] > div[class="n54117_item_b_sub"]', htmlString).first().text();
+            var fps= $('td[class="n54117_item_b2"] > div[class="n54117_item_b_sub"]', htmlString).eq(1).text();
+            var price= $('.projector_price_value', htmlString).text();
+            fps = fps.split(" ")[0];
+            if(fps.startsWith('~')){
+                fps = Number(fps.substring(1,fps.length));
+            };
+            
+            price = Number(price.substring(0,price.length-6));
+            return {
+                model:model,
+                fps:fps,
+                price:price
+            };
+        })
+        .catch(function (err) {
+            //handle error
+            console.log(err);
+        });
 };
-infoScraper(url);
-module.exports= infoScraper;
+
+module.exports = infoScraper;
