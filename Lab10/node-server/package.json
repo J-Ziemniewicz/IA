@@ -1,0 +1,14 @@
+{
+  "name": "lab10_node",
+  "version": "1.0.0",
+  "description": "Small node server with text editor in react",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jan Ziemniewicz",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
