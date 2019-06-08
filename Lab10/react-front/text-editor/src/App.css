@@ -19,7 +19,7 @@
   color: white;
 }
 
-.App-name{
+.App-name {
   font-size: 40px;
   margin: 0px;
   padding: 0px;
@@ -29,12 +29,12 @@
   color: #61dafb;
 }
 
-.Log-menu{
+.Log-menu {
   background-color: #61dafb;
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   width: 400px;
-  height:50px;
+  height: 50px;
   font-size: 25px;
   text-align: center;
   display: flex;
@@ -42,10 +42,24 @@
   flex-direction: column;
 }
 
-.Container{
+.Text-menu {
+  background-color: #61dafb;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  width: 400px;
+  height: 50px;
+  font-size: 25px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.Container {
   display: flex;
   justify-content: center;
 }
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
