@@ -42,6 +42,29 @@
   flex-direction: column;
 }
 
+.Text-container{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Text-header{
+  width: 400px;
+  background-color: #61dafb;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+.input-text{
+  width: 394px;
+  height: 400px;
+  text-align: start;
+}
+
+.Text-add{
+  width: 400px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
 .Text-menu {
   background-color: #61dafb;
   border-bottom-left-radius: 15px;

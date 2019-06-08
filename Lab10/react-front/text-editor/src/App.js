@@ -18,19 +18,40 @@ class App extends React.Component {
     this.showText = this.showText.bind(this);
     this.showLogin = this.showLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.fetchText = this.fetchText.bind(this);
+    this.showState = this.showState.bind(this);
   }
 
-  showText(login) {
+  fetchText() {
+    console.log(`http://localhost:8000/login/${String(this.state.login)}`);
+    fetch(`http://localhost:8000/login/${String(this.state.login)}`)
+      .then(response => response.json())
+      .then(data => {
+        this.text = data;
+        this.setState({
+          text : this.text,
+        });
+        
+
+      })
+      .catch(err => console.error(err));
+  }
+
+  showText() {
+    this.fetchText();
     this.setState({
       isLogged: true,
-      login: login,
     })
+    console.log(this.state.login);
   }
 
   showLogin() {
     this.setState({
       isLogged: false,
     })
+  }
+  showState(){
+    console.log(this.state.login);
   }
 
   handleChange(e) {
@@ -50,7 +71,7 @@ class App extends React.Component {
       </div>
         <div className="Log-input">
           <input type="text" className="input" onChange={this.handleChange} placeholder="Search..." />
-          <button className="Log-btn" onClick={() => this.showText(login)}>Loguj</button>
+          <button className="Log-btn" onClick={() => this.showText()}>Loguj</button>
         </div>
       </div>
     );
@@ -58,10 +79,12 @@ class App extends React.Component {
     var text = (
       <div>
         <div className="Log-menu">
-          Notatka
+          Notatki
           </div>
-        <div>
-          <input type="text" className="input" onChange={this.handleChange} placeholder="Search..." />
+        <div className = "Text-container">
+          <div className="Text-header">Nowa notatka</div>
+          <textarea type="text" className="input-text" onChange={this.handleChange} placeholder="Search..." />
+          <button className = "Text-add" onClick={this.showState}>Dodaj notatkę</button>
         </div>
       </div>
     );
