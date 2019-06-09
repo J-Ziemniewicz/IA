@@ -74,7 +74,7 @@ class App extends React.Component {
 
         this.setState({
           notes: data.content,
-          text:'',
+          
         });
       })
       .catch(err => console.error(err));
