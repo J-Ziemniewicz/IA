@@ -7,42 +7,77 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
-    this.text = "";
+    this.content = [];
+    this.logged = false;
+    this.login = '';
 
     this.state = {
       isLogged: false,
       login: "",
       text: "",
+      notes: [],
     };
 
-    this.showText = this.showText.bind(this);
+
     this.showLogin = this.showLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.fetchText = this.fetchText.bind(this);
+    this.handleChangeNote = this.handleChangeNote.bind(this);
+    this.loginFun = this.loginFun.bind(this);
     this.showState = this.showState.bind(this);
+    this.logout = this.logout.bind(this);
+    this.addNote = this.addNote.bind(this);
+
   }
 
-  fetchText() {
-    console.log(`http://localhost:8000/login/${String(this.state.login)}`);
+
+  loginFun() {
+    console.log(this.state.login);
     fetch(`http://localhost:8000/login/${String(this.state.login)}`)
+
       .then(response => response.json())
       .then(data => {
-        this.text = data;
-        this.setState({
-          text : this.text,
-        });
-        
 
+        this.setState({
+          notes: data.notes,
+          isLogged: data.success,
+        });
+      })
+      .catch(err => console.error(err));
+
+  }
+
+  logout() {
+    fetch('http://localhost:8000/logout')
+      .then(response => response.json())
+      .then(data => {
+
+        this.setState({
+          isLogged: data.logged,
+        });
       })
       .catch(err => console.error(err));
   }
 
-  showText() {
-    this.fetchText();
-    this.setState({
-      isLogged: true,
+  addNote() {
+    fetch('http://localhost:8000/add', {
+      method: 'POST',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content: this.state.text,
+      })
     })
-    console.log(this.state.login);
+      .then(response => response.json())
+      .then(data => {
+
+        this.setState({
+          notes: data.content,
+          text:'',
+        });
+      })
+      .catch(err => console.error(err));
   }
 
   showLogin() {
@@ -50,7 +85,8 @@ class App extends React.Component {
       isLogged: false,
     })
   }
-  showState(){
+
+  showState() {
     console.log(this.state.login);
   }
 
@@ -63,6 +99,16 @@ class App extends React.Component {
     }
   }
 
+  handleChangeNote(e) {
+
+    if (e.target.value !== "") {
+      this.setState({
+        text: e.target.value
+      });
+    }
+  }
+
+
   render() {
     var login = (
       <div>
@@ -71,20 +117,36 @@ class App extends React.Component {
       </div>
         <div className="Log-input">
           <input type="text" className="input" onChange={this.handleChange} placeholder="Search..." />
-          <button className="Log-btn" onClick={() => this.showText()}>Loguj</button>
+          <button className="Log-btn" onClick={this.loginFun}>Loguj</button>
         </div>
       </div>
     );
 
+    var notes = this.state.notes.map((data) => {
+      return (
+        <div className="Note-container">
+          <div className="Note-content">{data.content}</div>
+          <div>{data.date}</div>
+        </div>
+      )
+    })
+
+
     var text = (
       <div>
-        <div className="Log-menu">
-          Notatki
+        <div>
+          <div className="Log-menu">
+            Notatki
+        <button className="Logout-btn" onClick={this.logout}>Wyloguj</button>
           </div>
-        <div className = "Text-container">
+          <div>
+            {notes}
+          </div>
+        </div>
+        <div className="Text-container">
           <div className="Text-header">Nowa notatka</div>
-          <textarea type="text" className="input-text" onChange={this.handleChange} placeholder="Search..." />
-          <button className = "Text-add" onClick={this.showState}>Dodaj notatkę</button>
+          <textarea type="text" className="input-text" onChange={this.handleChangeNote} placeholder="Nowa notatka" />
+          <button className="Text-add" onClick={this.addNote}>Dodaj notatkę</button>
         </div>
       </div>
     );
